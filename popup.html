@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Nexus Guard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+
+    <!-- ─── App Bar ─── -->
+    <div class="app-bar">
+      <button class="icon-btn" id="menuOpenBtn" aria-label="Open menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="8"  x2="21" y2="8"/>
+          <line x1="3" y1="16" x2="15" y2="16"/>
+        </svg>
+      </button>
+      <div class="app-bar-logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <h2>NEXUS<span>GUARD</span></h2>
+      </div>
+      <div style="width:34px"></div>
+    </div>
+
+    <!-- ─── Drawer Overlay ─── -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+
+    <!-- ─── Drawer ─── -->
+    <div class="drawer" id="drawer">
+      <div class="drawer-header">
+        <span class="drawer-header-title">Navigation</span>
+        <button class="icon-btn" id="menuCloseBtn" aria-label="Close menu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="drawer-nav">
+        <button class="nav-btn active" data-tab="tab-injector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          Injector Protocol
+        </button>
+        <button class="nav-btn" data-tab="tab-license">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          License &amp; Support
+        </button>
+        <button class="nav-btn" data-tab="tab-dev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Developer Info
+        </button>
+      </nav>
+
+      <div class="drawer-footer">
+        <div class="version-badge">
+          <span class="version-dot"></span>
+          v4.0 — Active
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Content ─── -->
+    <div class="content-area">
+
+      <!-- ══ TAB: Injector ══ -->
+      <div id="tab-injector" class="tab-content active">
+
+        <!-- Wrong Site Screen -->
+        <div id="screenWrongSite" class="screen">
+          <div class="screen-icon danger">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+            </svg>
+          </div>
+          <h3 class="screen-title">Target Not Found</h3>
+          <p class="screen-subtitle">Navigate to an authorized Nexus target domain to continue.</p>
+          <button id="navBtn" class="btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 8 16 12 12 16"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+            Go to Target
+          </button>
+        </div>
+
+        <!-- Ready Screen -->
+        <div id="screenReady" class="screen">
+          <div class="status-pill">
+            <span class="status-pill-dot"></span>
+            Target Acquired
+          </div>
+          <div class="screen-icon success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <h3 class="screen-title">Ready to Sync</h3>
+          <p class="screen-subtitle">Solve any manual captchas first, then initiate synchronization.</p>
+          <button id="startTimerBtn" class="btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Start Sync (30s)
+          </button>
+        </div>
+
+        <!-- Timer Screen -->
+        <div id="screenTimer" class="screen">
+          <h3 class="screen-title" style="margin-bottom:6px;">Bypassing Protocols</h3>
+          <p class="screen-subtitle" style="margin-bottom:0">Do not close this window...</p>
+
+          <div class="timer-ring-wrapper">
+            <svg class="timer-ring" width="130" height="130" viewBox="0 0 130 130">
+              <circle class="timer-ring-bg" cx="65" cy="65" r="54"/>
+              <circle class="timer-ring-fill" id="timerRingFill" cx="65" cy="65" r="54"/>
+            </svg>
+            <div class="timer-center">
+              <div id="timerDisplay">30</div>
+              <div class="timer-label">seconds</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inject Screen -->
+        <div id="screenInject" class="screen">
+          <div class="screen-icon cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </div>
+          <h3 class="screen-title">Sync Complete</h3>
+          <p class="screen-subtitle">Ready to deploy the final payload override.</p>
+          <button id="injectBtn" class="btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            Deploy Override
+          </button>
+        </div>
+
+      </div><!-- /tab-injector -->
+
+      <!-- ══ TAB: License ══ -->
+      <div id="tab-license" class="tab-content">
+
+        <div class="glass-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <div>
+              <div class="card-title">Get a License</div>
+            </div>
+          </div>
+          <p class="card-text">To obtain or renew a valid Nexus Guard license, contact the System Administrator directly via Telegram.</p>
+          <a href="https://t.me/ImUnknownBro2" target="_blank" style="text-decoration:none;display:block;">
+            <button class="btn" style="margin-bottom:0">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Contact Admin
+            </button>
+          </a>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-title" style="margin-bottom:14px;">Important Links</div>
+          <a href="https://t.me/aincradnexus" target="_blank" style="text-decoration:none;display:block;">
+            <button class="btn btn-secondary" style="margin-bottom:8px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Join Telegram Channel
+            </button>
+          </a>
+          <a href="https://t.me/aincradnexus" target="_blank" style="text-decoration:none;display:block;">
+            <button class="btn btn-secondary" style="margin-bottom:0">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
+              </svg>
+              Watch Tutorial
+            </button>
+          </a>
+        </div>
+
+        <div class="glass-card" style="margin-bottom:0">
+          <div class="card-title" style="margin-bottom:12px;">Extension Info</div>
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">Extension</div>
+              <div class="info-row-value">Nexus Guard</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">Version</div>
+              <div class="info-row-value">4.0</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">Protocol</div>
+              <div class="info-row-value">Manifest V3</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tab-license -->
+
+      <!-- ══ TAB: Developer ══ -->
+      <div id="tab-dev" class="tab-content">
+
+        <div class="glass-card" style="text-align:center;">
+          <div class="dev-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="dev-name">Ahmed Numan</div>
+          <div class="dev-role">Lead Developer</div>
+          <p class="dev-bio">Architect of Nexus Guard. Specialist in Web Automation and Browser Extension Development. Passionate about creating secure, efficient solutions for the web.</p>
+          <a href="https://ahmednuman.netlify.app" target="_blank" style="text-decoration:none;display:block;">
+            <button class="btn" style="margin-bottom:0">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              Visit Portfolio
+            </button>
+          </a>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-title" style="margin-bottom:12px;">Tech Stack</div>
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">Frontend</div>
+              <div class="info-row-value">HTML5 · CSS3 · JavaScript</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">API</div>
+              <div class="info-row-value">Vercel · REST</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">Platform</div>
+              <div class="info-row-value">Chrome · Edge · Brave</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center;padding:4px 0 8px;">
+          <p style="font-size:11px;color:var(--text-muted);margin:0;">&copy; 2026 Ahmed Numan. All rights reserved.</p>
+        </div>
+
+      </div><!-- /tab-dev -->
+
+    </div><!-- /content-area -->
+
+    <!-- ─── Version Update Overlay ─── -->
+    <div id="screenUpdate" class="screen hidden" style="
+      z-index:100;background:rgba(2,12,27,0.96);backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);position:absolute;inset:0;
+      justify-content:center;padding:30px 24px;
+    ">
+      <div class="screen-icon danger" style="width:72px;height:72px;border-radius:22px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:32px;height:32px;">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <h3 class="screen-title" style="font-size:19px;">System Obsolete</h3>
+      <p class="screen-subtitle" style="color:var(--danger);font-weight:600;margin-bottom:6px;">A critical security update is required.</p>
+      <p class="screen-subtitle" style="font-size:11px;">Your current version is no longer supported by the Nexus Guard protocol.</p>
+      <button id="updateBtn" class="btn btn-danger">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/>
+        </svg>
+        Download Update
+      </button>
+    </div>
+
+    <script src="js/popup.js"></script>
+  </body>
+</html>

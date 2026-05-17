@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Nexus Guard",
+  "version": "4.0",
+  "description": "Smart Aincrad CF Bypass & JS Injector — Clean, secure, and fast.",
+  "permissions": ["activeTab", "scripting", "tabs", "storage", "sidePanel"],
+  "host_permissions": ["http://localhost/*", "https://*/*", "http://*/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "popup.html"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Open Nexus Guard"
+  },
+  "icons": {
+    "16":  "icons/icon16.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
