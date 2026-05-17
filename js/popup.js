@@ -176,8 +176,7 @@ function injectPayload() {
     "https://aincradmods.com/getkey?token=daba3034830 14c3c99b4775bc28255d7&__cf_chl_tk=FoyBr6FD4WKNx.ta.pcXR59nqmp.FchxMLbF239UuxY-1778671624-1.0.1.1-PBZ9mHDzGitTL.dwRmCKYMXVr4RjHpLuyEUILG7osYM",
   ];
 
-  const baseUrl = bypassUrls[Math.floor(Math.random() * bypassUrls.length)];
-  const finalUrl = `${baseUrl}${baseUrl.includes("?") ? "&" : "?"}_cb=${Date.now()}${Math.floor(Math.random() * 616)}`;
+  const finalUrl = bypassUrls[Math.floor(Math.random() * bypassUrls.length)];
 
   document.body.innerHTML = `
     <div style="
